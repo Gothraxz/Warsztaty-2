@@ -1,6 +1,6 @@
-package Zadania;
+package Models;
 
-public class Test {
+public class Exercise {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
