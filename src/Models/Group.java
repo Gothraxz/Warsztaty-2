@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Group {
 
@@ -60,6 +61,15 @@ public class Group {
 				this.id	= rs.getInt(1);
 			}
 		}
+		// edycja grupy - nie wymagana
+//		} else {
+//			String sql = "UPDATE Users SET name = ? where id = ?";
+//			PreparedStatement preparedStatement;
+//			preparedStatement = conn.prepareStatement(sql);
+//			preparedStatement.setString(1, this.name);
+//			preparedStatement.setInt(2, this.id);
+//			preparedStatement.executeUpdate();
+//		}
 	}
 	
 	public static Group loadById(Connection conn, int id) throws SQLException {
@@ -77,5 +87,32 @@ public class Group {
 			return null;
 		}
 	
+	static public Group[] loadAllGroups(Connection conn) throws SQLException {
+		ArrayList<Group> groups = new ArrayList<Group>();
+		String sql = "SELECT * FROM Groups";
+		PreparedStatement preparedStatement;
+		preparedStatement = conn.prepareStatement(sql);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		while (resultSet.next()) {
+			Group loadedGroup = new Group();
+			loadedGroup.id = resultSet.getInt("id");
+			loadedGroup.name = resultSet.getString("name");
+			groups.add(loadedGroup);
+		}
+		Group[] gArray = new Group[groups.size()]; 
+		gArray = groups.toArray(gArray);
+		return gArray;
+	}
+	
+	public void delete(Connection conn) throws SQLException {
+		if (this.id != 0) {
+			String sql = "DELETE FROM Groups WHERE id = ?";
+			PreparedStatement preparedStatement;
+			preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setInt(1, this.id);
+			preparedStatement.executeUpdate();
+			this.id = 0;
+		}
+	}
 	
 }
