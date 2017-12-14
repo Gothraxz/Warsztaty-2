@@ -43,17 +43,17 @@ public class Solution {
 		return created;
 	}
 
-	public void setCreated(String created) {
-		this.created = created;
-	}
+//	public void setCreated(String created) {
+//		this.created = created;
+//	}
 
 	public String getUpdated() {
 		return updated;
 	}
 
-	public void setUpdated(String updated) {
-		this.updated = updated;
-	}
+//	public void setUpdated(String updated) {
+//		this.updated = updated;
+//	}
 
 	public String getDescription() {
 		return description;

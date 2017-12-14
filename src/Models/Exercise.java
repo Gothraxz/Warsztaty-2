@@ -15,6 +15,11 @@ public class Exercise {
 	private int id;
 	private String title;
 	private String description;
+	// zmienne na potrzeby pobrania rozwiązań
+	private int solutionId;
+	private String solutionCreated;
+	private String solutionUpdated;
+	private String solutionDescription;
 	
 	public Exercise(String title) {
 		this.title = title;
@@ -48,6 +53,23 @@ public class Exercise {
 		this.description = description;
 	}
 	
+	// gettery na potrzeby pobrania rozwiązań
+	public int getSolutionId() {
+		return solutionId;
+	}
+
+	public String getSolutionCreated() {
+		return solutionCreated;
+	}
+
+	public String getSolutionUpdated() {
+		return solutionUpdated;
+	}
+
+	public String getSolutionDescription() {
+		return solutionDescription;
+	}
+
 	public static void createTable(Connection conn) {
 		String query = "CREATE TABLE Exercise(\n" + 
 				"	id INT AUTO_INCREMENT,\n" + 
@@ -133,6 +155,56 @@ public class Exercise {
 			preparedStatement.executeUpdate();
 			this.id = 0;
 		}
+	}
+	
+	// koncepcja
+	// nie pobiera danych bezpośrednio z Solution - ograniczony przez "private"
+	// zmienne do poprawy
+//	static public Solution[] loadAllByUserId(Connection conn, int id) throws SQLException {
+//		ArrayList<Solution> solutions = new ArrayList<Solution>();
+//		String sql = "SELECT * FROM Solution WHERE users_id = ?";
+//		PreparedStatement preparedStatement;
+//		preparedStatement = conn.prepareStatement(sql);
+//		preparedStatement.setInt(1, id);
+//		ResultSet resultSet = preparedStatement.executeQuery();
+//		while (resultSet.next()) {
+//			Solution loadedSolutions = new Solution();
+//			loadedSolutions.id = resultSet.getInt("id");
+//			loadedSolutions.title = resultSet.getString("title");
+//			loadedSolutions.description = resultSet.getString("description");
+//			loadedSolutions.getExercise();
+//			solutions.add(loadedSolutions);
+//		}
+//		Solution[] sArray = new Solution[solutions.size()]; 
+//		sArray = solutions.toArray(sArray);
+//		return sArray;
+//	}
+	
+	static public Exercise[] loadAllByUserId(Connection conn, int id) throws SQLException {
+		ArrayList<Exercise> exercises = new ArrayList<Exercise>();
+		String sql = "SELECT Exercise.id AS e_id, Exercise.title AS e_title, Exercise.description AS e_description, \n" + 
+				"Solution.id, Solution.created, Solution.updated, Solution.description, \n" + 
+				"Solution.users_id, Solution.exercise_id FROM Solution\n" + 
+				"JOIN Exercise ON Solution.exercise_id = Exercise.id\n" + 
+				"WHERE Solution.users_id = ?;";
+		PreparedStatement preparedStatement;
+		preparedStatement = conn.prepareStatement(sql);
+		preparedStatement.setInt(1, id);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		while (resultSet.next()) {
+			Exercise loadedSolutions = new Exercise();
+			loadedSolutions.id = resultSet.getInt("e_id");
+			loadedSolutions.title = resultSet.getString("e_title");
+			loadedSolutions.description = resultSet.getString("e_description");
+			loadedSolutions.solutionId = resultSet.getInt("id");
+			loadedSolutions.solutionCreated = resultSet.getString("created");
+			loadedSolutions.solutionUpdated = resultSet.getString("updated");
+			loadedSolutions.solutionDescription = resultSet.getString("description");
+			exercises.add(loadedSolutions);
+		}
+		Exercise[] eArray = new Exercise[exercises.size()]; 
+		eArray = exercises.toArray(eArray);
+		return eArray;
 	}
 	
 }

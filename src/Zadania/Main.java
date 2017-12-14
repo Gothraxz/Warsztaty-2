@@ -118,6 +118,14 @@ public class Main {
 //			solution2.delete(conn);
 //			System.out.println(solution2.getDescription());
 //			
+	
+			// wczytywanie rozwiązań danego użytkownika
+//			Exercise[] exercises = Exercise.loadAllByUserId(conn, 4);
+//			for (int i = 0; i < exercises.length; i++) {
+//				System.out.println(exercises[i].getSolutionId());
+//				System.out.println(exercises[i].getSolutionCreated());
+//				System.out.println("- - -");
+//			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
