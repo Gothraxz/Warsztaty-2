@@ -33,9 +33,9 @@ public class User {
 		return id;
 	}
 
-//	public void setId(int id) {
-//		this.id = id;
-//	}
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getUsername() {
 		return username;
@@ -165,5 +165,20 @@ public class User {
 		}
 	}
 	
-	
+	public static User[] loadAllByGrupId(Connection conn, int id) throws SQLException {
+		ArrayList<User> solution = new	ArrayList<>();
+		String sql = "SELECT * FROM Users WHERE group_id=?;";
+		PreparedStatement preparedStatement;
+		preparedStatement = conn.prepareStatement(sql);
+		preparedStatement.setInt(1, id);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		while (resultSet.next()) {
+			User loadedUser = new User();
+			loadedUser = User.loadById(conn, resultSet.getInt("id"));
+			solution.add(loadedUser);
+		}
+		User[] uArray = new User[solution.size()];	
+		uArray = solution.toArray(uArray);
+		return uArray;
+	}
 }

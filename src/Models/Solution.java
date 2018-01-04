@@ -35,25 +35,25 @@ public class Solution {
 		return id;
 	}
 
-//	public void setId(int id) {
-//		this.id = id;
-//	}
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getCreated() {
 		return created;
 	}
 
-//	public void setCreated(String created) {
-//		this.created = created;
-//	}
+	public void setCreated(String created) {
+		this.created = created;
+	}
 
 	public String getUpdated() {
 		return updated;
 	}
 
-//	public void setUpdated(String updated) {
-//		this.updated = updated;
-//	}
+	public void setUpdated(String updated) {
+		this.updated = updated;
+	}
 
 	public String getDescription() {
 		return description;
@@ -79,6 +79,14 @@ public class Solution {
 		this.user = user;
 	}
 	
+	public DateFormat getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(DateFormat dateTime) {
+		this.dateTime = dateTime;
+	}
+
 	public static void createTable(Connection conn) {
 		String query = "CREATE TABLE Solution(\n" + 
 				"	id INT AUTO_INCREMENT,\n" + 
@@ -181,6 +189,23 @@ public class Solution {
 			preparedStatement.executeUpdate();
 			this.id = 0;
 		}
+	}
+
+	static public Solution[] loadAllByExerciseId(Connection conn, int id) throws SQLException {
+		ArrayList<Solution> solutions = new ArrayList<>();
+		String sql = "SELECT * FROM Solution WHERE exercise_id=? ORDER BY created DESC";
+		PreparedStatement preparedStatement;
+		preparedStatement = conn.prepareStatement(sql);
+		preparedStatement.setInt(1, id);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		while (resultSet.next()) {
+			Solution loadedSolution = new Solution();
+			loadedSolution = Solution.loadById(conn, resultSet.getInt("id"));
+			solutions.add(loadedSolution);
+		}
+		Solution[] sArray = new Solution[solutions.size()];
+		sArray = solutions.toArray(sArray);
+		return sArray;
 	}
 	
 }

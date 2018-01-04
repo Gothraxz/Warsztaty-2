@@ -33,6 +33,10 @@ public class Group {
 		this.name = name;
 	}
 	
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public static void createTable(Connection conn) {
 		String query = "CREATE TABLE Groups(\n" + 
 				"	id INT AUTO_INCREMENT,\n" + 

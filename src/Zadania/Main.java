@@ -119,13 +119,48 @@ public class Main {
 //			System.out.println(solution2.getDescription());
 //			
 	
-			// wczytywanie rozwiązań danego użytkownika
+			// wczytywanie rozwiązań danego użytkownika - metoda alternatywna
 //			Exercise[] exercises = Exercise.loadAllByUserId(conn, 4);
 //			for (int i = 0; i < exercises.length; i++) {
 //				System.out.println(exercises[i].getSolutionId());
 //				System.out.println(exercises[i].getSolutionCreated());
 //				System.out.println("- - -");
 //			}
+			
+			// wczytywanie rozwiązań danego użytkownika - zastosowanie obiektu Solution
+//			Solution[] exercises = Exercise.loadAllByUserId(conn, 1);
+//			for (int i = 0; i < exercises.length;  i++) {
+//				System.out.println(exercises[i].getId());
+//				System.out.println(exercises[i].getDescription());
+//				System.out.println(exercises[i].getCreated());
+//				System.out.println(exercises[i].getUpdated());
+//				System.out.println(exercises[i].getUser().getUsername());
+//				System.out.println(exercises[i].getExercise().getDescription());
+//				System.out.println("- - -");
+//			}
+			
+			// wczytywanie wszystkich rozwiązań danego ćwiczenia
+//			Solution[] solutions = Solution.loadAllByExerciseId(conn, 1);
+//			for (int i = 0; i < solutions.length; i++) {
+//				System.out.println(solutions[i].getId());
+//				System.out.println(solutions[i].getCreated());
+//				System.out.println(solutions[i].getUpdated());
+//				System.out.println(solutions[i].getUser().getUsername());
+//				System.out.println(solutions[i].getExercise().getId());
+//				System.out.println("- - -");
+//			}
+			
+			// wczytywanie wszystkich użytkowników danej grupy
+//			User[] users = User.loadAllByGrupId(conn, 1);
+//			for (int i = 0; i < users.length; i++) {
+//				System.out.println(users[i].getId());
+//				System.out.println(users[i].getUsername());
+//				System.out.println(users[i].getEmail());
+//				System.out.println(users[i].getPassword());
+//				System.out.println(users[i].getGroup().getId());
+//				System.out.println("- - -");
+//			}
+			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
