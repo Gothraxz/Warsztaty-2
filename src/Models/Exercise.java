@@ -99,17 +99,15 @@ public class Exercise {
 			if (rs.next())	{
 				this.id	= rs.getInt(1);
 			}
+		} else {
+			String sql = "UPDATE Exercise SET title = ?, description = ? where id = ?";
+			PreparedStatement preparedStatement;
+			preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setString(1, this.title);
+			preparedStatement.setString(2, this.description);
+			preparedStatement.setInt(3, this.id);
+			preparedStatement.executeUpdate();
 		}
-			// edycja - nie wymagana
-//		} else {
-//			String sql = "UPDATE Exercise SET title = ?, description = ? where id = ?";
-//			PreparedStatement preparedStatement;
-//			preparedStatement = conn.prepareStatement(sql);
-//			preparedStatement.setString(1, this.title);
-//			preparedStatement.setString(2, this.description);
-//			preparedStatement.setInt(3, this.id);
-//			preparedStatement.executeUpdate();
-//		}
 	}
 	
 	public static Exercise loadById(Connection conn, int id) throws SQLException {

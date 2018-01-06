@@ -113,28 +113,24 @@ public class Solution {
 		this.updated = dateTime.format(date).toString();
 		this.created = dateTime.format(date).toString();
 		if	(this.id == 0) {
-			String sql = "INSERT INTO Solution(created, updated, description, exercise_id, users_id) VALUES (?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO Solution(created, exercise_id, users_id) VALUES (?, ?, ?)";
 			String generatedColumns[] = { "ID" };
 			PreparedStatement preparedStatement;
 			preparedStatement = conn.prepareStatement(sql, generatedColumns);
 			preparedStatement.setString(1, this.created);
-			preparedStatement.setString(2, this.updated);
-			preparedStatement.setString(3, this.description);
-			preparedStatement.setInt(4, this.exercise.getId());
-			preparedStatement.setInt(5, this.user.getId());
+			preparedStatement.setInt(2, this.exercise.getId());
+			preparedStatement.setInt(3, this.user.getId());
 			preparedStatement.executeUpdate();
 			ResultSet rs = preparedStatement.getGeneratedKeys();
 			if (rs.next())	{
 				this.id	= rs.getInt(1);
 			}
 		} else {
-			String sql = "UPDATE Solution SET updated = ?, description = ?, exercise_id = ?, users_id = ? where id = ?";
+			String sql = "UPDATE Solution SET updated = ?, description = ? where id = ?";
 			PreparedStatement preparedStatement;
 			preparedStatement = conn.prepareStatement(sql);
 			preparedStatement.setString(1, this.updated);
 			preparedStatement.setString(2, this.description);
-			preparedStatement.setInt(3, this.exercise.getId());
-			preparedStatement.setInt(4, this.user.getId());
 			preparedStatement.setInt(5, this.id);
 			preparedStatement.executeUpdate();
 		}

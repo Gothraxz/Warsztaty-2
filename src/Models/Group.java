@@ -64,16 +64,14 @@ public class Group {
 			if (rs.next())	{
 				this.id	= rs.getInt(1);
 			}
+		} else {
+			String sql = "UPDATE Groups SET name = ? where id = ?";
+			PreparedStatement preparedStatement;
+			preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setString(1, this.name);
+			preparedStatement.setInt(2, this.id);
+			preparedStatement.executeUpdate();
 		}
-		// edycja grupy - nie wymagana
-//		} else {
-//			String sql = "UPDATE Users SET name = ? where id = ?";
-//			PreparedStatement preparedStatement;
-//			preparedStatement = conn.prepareStatement(sql);
-//			preparedStatement.setString(1, this.name);
-//			preparedStatement.setInt(2, this.id);
-//			preparedStatement.executeUpdate();
-//		}
 	}
 	
 	public static Group loadById(Connection conn, int id) throws SQLException {

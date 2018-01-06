@@ -68,9 +68,9 @@ public class UserAdmin {
 		
 		for (int i = 0; i < users.length; i++) {
 			System.out.println("Id: " + users[i].getId());
-			System.out.println("Name: " + users[i].getUsername());
+			System.out.println("Nazwa: " + users[i].getUsername());
 			System.out.println("E-mail: " + users[i].getEmail());
-			System.out.println("Group id: " + users[i].getGroup().getId());
+			System.out.println("Id grupy: " + users[i].getGroup().getId());
 			System.out.println("- - - - - - -");
 		}
 	}
