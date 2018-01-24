@@ -165,6 +165,7 @@ public class Exercise {
 		ResultSet resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
 			Solution loadedSolutions = new Solution();
+			loadedSolutions.setId(resultSet.getInt("id"));
 			loadedSolutions.setCreated(resultSet.getString("created"));
 			loadedSolutions.setUpdated(resultSet.getString("updated"));
 			loadedSolutions.setDescription(resultSet.getString("description"));

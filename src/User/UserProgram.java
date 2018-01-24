@@ -17,11 +17,7 @@ public class UserProgram {
 	
 	public static void main(String[] args) {
 		try (Connection conn = (new Connect()).getConnect()) {
-
-			// DO POPRAWY:
-			// - view wyświetla 0 zamiast kolejnych ID
-			// - nullPointerException przy sprawdzaniu rozwiązań bez opisu / daty edycji
-			
+	
 			//obiekt up w celu wywołania metod nie statycznych
 			UserProgram up = new UserProgram();
 			Scanner scan = new Scanner(System.in);
@@ -142,17 +138,14 @@ public class UserProgram {
 	
 public void add(Connection conn) throws SQLException {
 		
-		String[] details = solutionDetails();
-		
-		while (!filled(details)) {
-			details = solutionDetails();
-		}
-		
 		Solution[] userSolutions = Exercise.loadAllByUserId(conn, userID);
 		List<Integer> missingSolutions = new ArrayList<>();
 		
 		for (Solution solution : userSolutions) {
-			if (solution.getDescription().isEmpty() || solution.getUpdated().isEmpty()) {
+			if (solution.getDescription() == null ||
+					solution.getDescription().isEmpty() || 
+					solution.getUpdated() == null ||
+					solution.getUpdated().isEmpty()) {
 				missingSolutions.add(solution.getId());
 			}
 		}
@@ -164,6 +157,29 @@ public void add(Connection conn) throws SQLException {
 		
 		System.out.println("\nWprowadź id do którego chcesz przypisać rozwiązanie:\n");
 		String solutionId = scanInt();
+		
+		boolean idOnList = false;
+		
+		do {
+			for (int i = 0; i < missingSolutions.size(); i++) {
+				if (missingSolutions.get(i) == Integer.parseInt(solutionId)) {
+					idOnList = true;
+					break;
+				}
+			}
+			if (idOnList == false) {
+				System.out.println("Wprowadziłeś id spoza zakresu!");
+				solutionId = scanInt();
+			}
+			
+		} while (idOnList == false);
+		
+		
+		String[] details = solutionDetails();
+
+		while (!filled(details)) {
+			details = solutionDetails();
+		}
 		
 		Solution updatedSolution = Solution.loadById(conn, Integer.parseInt(solutionId));
 		updatedSolution.setDescription(details[0]);
@@ -185,5 +201,5 @@ public void add(Connection conn) throws SQLException {
 		}
 		
 	}
-
+// done
 }

@@ -15,10 +15,6 @@ public class SolutionAdmin {
 	public static void main(String[] args) {
 		try (Connection conn = (new Connect()).getConnect()) {
 			
-			// DO POPRAWY:
-			// - view wyświetla 0 zamiast kolejnych ID
-			
-			
 			//obiekt ta w celu wywołania metod nie statycznych
 			SolutionAdmin sa = new SolutionAdmin();
 			Scanner scan = new Scanner(System.in);

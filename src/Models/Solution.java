@@ -131,7 +131,7 @@ public class Solution {
 			preparedStatement = conn.prepareStatement(sql);
 			preparedStatement.setString(1, this.updated);
 			preparedStatement.setString(2, this.description);
-			preparedStatement.setInt(5, this.id);
+			preparedStatement.setInt(3, this.id);
 			preparedStatement.executeUpdate();
 		}
 	}
